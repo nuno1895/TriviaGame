@@ -2,34 +2,71 @@
 
 var trivaQuestions = [ 
 	{
-		question: 'Question 1',
-		choices: ['answer1' , 'answer2' , 'answer3', 'answer4'],
-		rightChoice: 2
-	},{
-		question: 'Question 2',
-		choices: ['answer1' , 'answer2' , 'answer3', 'answer4'],
+		question: "On Sons of Anarchy, who was Tara's Killer?",
+		choices: ['Juice' , 'Gemma' , 'Wendy', 'Opie'],
+		img: "assets/images/sons.jpg",
 		rightChoice: 1
 	},{
-		question: 'Question 3',
-		choices: ['answer1' , 'answer2' , 'answer3', 'answer4'],
-		rightChoice: 3
-	}, {
-		question: 'Question 4',
-		choices: ['answer1' , 'answer2' , 'answer3', 'answer4'],
-		rightChoice: 4
+		question: "On the Walking Dead, what is Rick's surname?",
+		choices: ['Groves' , 'Grimes' , 'Gilles', 'Grimshaw'],
+		img: "assets/images/walking-dead.jpeg",
+		rightChoice: 1
 	},{
-		question: 'Question 5',
-		choices: ['answer1' , 'answer5' , 'answer3', 'answer4'],
-		rightChoice: 5
-	}, {
-		question: 'Question 6',
-		choices: ['answer1' , 'answer6' , 'answer3', 'answer4'],
+		question: "On Game of Thrones, Which are the house Lannister's words?",
+		choices: ['Ours is the fury' , 'Family, Duty, Honour' , 'Lannisters always pay their debt', 'Hear me roar'],
+		img: "assets/images/games.jpg",
 		rightChoice: 2
+	}, {
+		question: "On The Flash, who is Barry Allen?",
+		choices: ['The Flash' , 'Firestorm' , 'Spratan', 'Vibe'],
+		img: "assets/images/the-flash.jpg",
+		rightChoice: 0
+	},{
+		question: "On Breaking Bad, who is Heisenberg?",
+		choices: ['Jesse Pinkman' , 'Gus Fring' , 'Saul Goodman', 'Walter White'],
+		img: "assets/images/BreakingBad.png",
+		rightChoice: 3
+	},{
+		question: "On Marvel's Daredevil, who is Daredevil's Love interest?",
+		choices: ['Karen Page' , 'Claire Temple' , 'Elecktra', 'Vanessa Marianna'],
+		img: "assets/images/daredevil.jpg",
+		rightChoice: 2
+	},{
+		question: "On Mr. Robot, who plays Mr. Robot?",
+		choices: ['Christian Slater' , 'Ben Rappaport' , 'Rami Malek', 'Elliot Villar'],
+		img: "assets/images/mrrobot.jpg",
+		rightChoice: 0
+	},{
+		question: "On Super Natural, What is the last name of Dean and Sam?",
+		choices: ['Smith' , 'Johnson' , 'Winchester', 'Otendin'],
+		img: "assets/images/supernatural.png",
+		rightChoice: 2
+	},{
+		question: "On Vikings, What is the name Ragnar Lothbrook's first son?",
+		choices: ['Bjorn' , 'Rollo' , 'Athelstan', 'Floki'],
+		img: "assets/images/Vikings.jpg",
+		rightChoice: 0
+	}, {
+		question: "On Teen Wolf, who bit Scott and turned him to a Werewolf?",
+		choices: ['Derek' , 'Stiles' , 'Lyidia', 'Peter'],
+		img: "assets/images/teen.png",
+		rightChoice: 3
+		}, {
+		question: '',
+		choices: [''],
+		img: '',
+		rightChoice: ''
 	}];
 
 	var currentQuestion = 0;
 
 	var questionsRight = 0;
+
+	var questionWrong = 0;
+
+	var questionNotAnswered = 0;
+
+	var timerClock;
 
 	var startButton =document.getElementById("start");
 
@@ -41,11 +78,11 @@ $(document).ready(function() {
 
 		playGame = function () {
 
+			$('#button').hide();
+
 			//set timer
 
-			
-
-			var timerClock = 30;
+			timerClock = 15;
 
 			//selects all the questions and choices
 
@@ -61,6 +98,9 @@ $(document).ready(function() {
 
 			console.log(rightChoice);
 
+			var tvShowImages = trivaQuestions[currentQuestion].img;
+
+
 			//clears the Div to allow for new buttons
 
 			$('#choices').empty();
@@ -75,6 +115,8 @@ $(document).ready(function() {
 				console.log(choices[i]);
 				var newButton = $('<button>').text(choices[i]).attr('data-val' , i);
 				$('#choices').append(newButton);
+				var img = $('<img>').attr('class', 'showImages').attr('src', tvShowImages).attr('height', '250px').attr('width', '500px')
+					$('#images').html(img);
 				
 			};
 
@@ -85,14 +127,14 @@ $(document).ready(function() {
 				if($(this).data('val') == rightChoice){
 					currentQuestion++;
 					questionsRight++;
-					console.log('Questions Right: ' + questionsRight);
 					clearTimeout(timerId);
 					playGame();
 				}else if($(this).data('val') != rightChoice) {
-					clearTimeout(timerId);
-					$('#question').html('LOSER!!!!!!');
 					$('#choices').empty();
-					setTimeout(reset, 1000);
+					currentQuestion++;
+					questionWrong++;
+					clearTimeout(timerId);
+					playGame();
 				};
 
 
@@ -107,20 +149,45 @@ $(document).ready(function() {
 
 				function countdown() {
 				  if (timerClock == 0) {
-				    clearTimeout(timerId);
-				    $('#question').html("Time Ran Out");
-				    $('#choices').empty();
-				    setTimeout(reset, 3000)
+				    currentQuestion++;
+					questionNotAnswered++;					
+					clearTimeout(timerId);
+					playGame();				    
 				  } else {
-				    pageTimer.text(timerClock + ' seconds remaining');
+				    pageTimer.text(timerClock);
 				    timerClock--;
-				  }
-				}
+				  };
+				};
 
+			console.log('Questions Right: ' + questionsRight);
+			console.log('Questions Wrong: ' + questionWrong)
+			console.log('Questions Not Answered: ' + questionNotAnswered);
+			console.log("current question : " , currentQuestion);
+
+
+			if (currentQuestion == 10) {
+			clearTimeout(timerId);	
+			$('#question').empty();
+			$('#choices').empty();
+			$('#images').empty();
+			$('#timer').hide();
+			
+			$('body').css('background','url(../images/b2.jpeg)');
+			$('#question').html('<h2>You got ' + questionsRight + ' right!!!! </h2>');
+			$('#choices').html('<h2>You got ' + questionWrong + ' wrong!!!! </h2>');
+			$('#images').html('<h2>You missed ' + questionNotAnswered + ' questions!!!! </h2>');
+			var img2 = $('<img>').attr('src', "assets/images/gameOver.gif").attr('height', '250px').attr('width', '500px')
+					$('#images').append(img2);
+		
+
+			setTimeout(reset, 5000);
+		};	
 
 		};
+		
 
-		playGame()
+		playGame();
+
 
 		 //function to reload page on loss
 

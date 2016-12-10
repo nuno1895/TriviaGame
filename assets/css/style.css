@@ -1,0 +1,60 @@
+body {
+	background: url("../images/tvback.jpg");
+	background-repeat: no-repeat;
+	background-attachment:fixed;
+	background-size: cover;
+	color:black;
+	text-align: center;
+	font-family: 'Bangers', cursive, Times, Times New Roman, serif;
+	letter-spacing: 3px;
+}
+
+
+
+#timer {
+	padding-top: 75px;
+	color: #224410;
+	font-size: 22px;
+}
+
+#question {
+	color: #224410;
+	font-size: 22px;
+}
+
+#choices, #images {
+	padding-top: 20px
+}
+
+
+#header {
+	color: white;
+	line-height: 30px;
+	font-size: 30px;
+	border: 30px;
+	margin: 40px;
+	letter-spacing: 5px;
+}
+
+#start {
+	font-weight: bolder;
+	font-size: 30px;
+	padding: 10px;
+	color:black;
+	background-color: #bc002f;
+
+}
+
+#choices button {
+	font-weight: bolder;
+	font-size: 20px;
+	padding: 10px;
+	margin:10px;
+	color:#efeded;
+	background-color: #6d6b6c;
+}
+
+
+
+
+
