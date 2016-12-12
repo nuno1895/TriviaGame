@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 			//set timer
 
-			timerClock = 15;
+			timerClock = 10;
 
 			//selects all the questions and choices
 
@@ -143,7 +143,6 @@ $(document).ready(function() {
 			//creates and sets timers
 
 
-
 			var pageTimer = $('#clock').text(timerClock);
 			var timerId = setInterval(countdown, 1000);
 
@@ -172,10 +171,15 @@ $(document).ready(function() {
 			$('#images').empty();
 			$('#timer').hide();
 			
-			$('body').css('background','url(../images/b2.jpeg)');
+			$('body').css('background-image','url(assets/images/curtains.png)');
+
+
 			$('#question').html('<h2>You got ' + questionsRight + ' right!!!! </h2>');
 			$('#choices').html('<h2>You got ' + questionWrong + ' wrong!!!! </h2>');
 			$('#images').html('<h2>You missed ' + questionNotAnswered + ' questions!!!! </h2>');
+
+			$('.display').css('color', 'white');
+			
 			var img2 = $('<img>').attr('src', "assets/images/gameOver.gif").attr('height', '250px').attr('width', '500px')
 					$('#images').append(img2);
 		
